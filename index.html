@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Corey Vernon</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+    crossorigin="anonymous"/>
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
+    <style>
+        body {
+          background-color: powderblue;
+        }
+
+        h1 {
+          color: blue;
+        }
+
+        p {
+          color: black;
+        }
+
+        .info {
+          color: red;
+        }
+        .about {
+          height: 10rem;
+        }
+      </style>
+  </head>
+
+  <body>
+    <div id='root'></div>
+    <script type='text/babel'>
+      class App extends React.Component{
+        state = {
+          user: {},
+          repos: []
+        }
+
+        componentDidMount(){
+          this.getInfo('coreyjvernon')
+        }
+
+        getInfo = (username) => {
+          axios.get(`https://api.github.com/users/${username}`)
+          .then(response => {
+            this.setState({user: response.data})
+          })
+          axios.get(`https://api.github.com/users/${username}/repos?sort=updated`)
+          .then(response => {
+            this.setState({repos: response.data.slice(0,5)})
+          })
+        }
+
+        render(){
+          let {user, repos} = this.state
+          console.log(user)
+          return(
+            <div className='info'>
+              <h1>{user.name}</h1>
+              <p className='about'>I am a full-stack web developer with an extensive background in hospitality and security. 
+              I've proven to be an aggressive learner who's highly skilled with front-end programming languages 
+              HTML, CSS, and JavaScript, as well as the JavaScript frameworks, React and jQuery. 
+              I'm also skilled with the back-end language Ruby, specifically with the Rails framework. 
+              I have a solid understanding of back-end languages Python and SQL, as well. 
+              I also possess a meticulous attention to detail and an uncanny ability 
+              to remain calm and clear-headed in high pressure situations.
+              </p>
+              <p><a href={user.html_url}>{user.html_url}</a></p>
+              <p>email: {'coreyjvernon@gmail.com'}</p>
+              <div className='row'>
+                <div className="col-sm">
+                  <p>Followers: {user.followers}</p>
+                </div>
+                <div className="col-sm">
+                  <p>Following: {user.following}</p>
+                </div>
+                <div className="col-sm">
+                  <p>Public Repositories: {user.public_repos}</p>
+                </div>
+              </div>
+              <h2>Repositories:</h2>
+              <ul className='list-group'>
+                {
+                  repos.map( repo => {
+                    return(
+                      <li key={repo.html_url} className='list-group-item'>{repo.name}: <a href={repo.html_url}>{repo.html_url}</a></li>
+                    )
+                  })
+                }
+              </ul>
+            </div>
+          )
+        }
+      }
+
+      ReactDOM.render(
+      <App />,
+        document.getElementById('root')
+      )
+
+    </script>
+  </body>
+</html>
