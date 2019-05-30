@@ -15,7 +15,7 @@
     -Document Object Model. An interface that represents the web page and allows the programmer to manipulate it. Structure, style, and content can all be manipulated with JavaScript or other scripting language.
 
     Which one is better: CSS Grid, Flexbox or just plain CSS?
-    - All have their usecases but I prefer CSS grid. The answer is based on personal preference. 
+    - All have their usecases but I prefer CSS grid. The answer is typically based on personal preference. Flexbox gives you more flexibility when laying out items in a single direction.
 
     When should one stop learning? 🤔
     -NEVER!!!!!
